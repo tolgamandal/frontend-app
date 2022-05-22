@@ -10,101 +10,211 @@
 	body{
 		height: 100%;
 		margin: 0;
-		background: darkorange;
-		text-align: center;
 	}
-	table, th, td {
-		border:1px solid black;
-		padding: 20px;
-	}
-	table{
-		background: darkseagreen;
-	}
-	th{
-		background: mediumseagreen;
-		color: whitesmoke;
-	}
-	.TL{
-		background: mediumseagreen;
-    		color: whitesmoke;
-		font-weight: bold;
-	}
-	#USD,#GBP{
-		font-size: 20px;
-	}
+
 	.wrapper{
-		margin-top: 200px;
+		margin: 20px;
 	}
-	.content{
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	input[type=text], select {
+		padding: 6px 6px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
 	}
-	h1{
-		color: darkblue;
+	#submit {
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 12px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 0px;
+		cursor: pointer;
+		margin-left: 143px;
 	}
-	
+
+	#apiTable {
+		font-family: Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+		color: brown;
+	}
+
+	#apiTable td, #apiTable th {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	#apiTable tr:nth-child(even){background-color: #f2f2f2;}
+
+	#apiTable tr:hover {background-color: #ddd;}
+
+	#apiTable th {
+		padding-top: 12px;
+		padding-bottom: 12px;
+		text-align: left;
+		background-color: #04AA6D;
+		color: white;
+	}
 </style>
 <head>
-</head>
+</head> 
 <body>
 	<div class="wrapper">
-		<h1>Currency Exchange Rates</h1>
-		<div class="content">
-			<table class="table">
+
+		<p style="font-size: 25px;font-weight: bold; text-decoration: underline; color: brown;">User Information</p>
+
+		<div class="textContent">
+			<div id="sectionText" style="">
+				<span style="width: 66px; display: inline-block;">Name:</span><input id="nameText" type="text">
+			</div>
+			<div id="sectionText">
+				<span style="width: 66px; display: inline-block;">Surname:</span><input id="surNameText" type="text">
+			</div>
+			<div id="sectionText">
+				<span style="width: 66px; display: inline-block;">Mail:</span><input id="mailText" type="text">
+			</div>
+			<button id="submit" onclick="myFunction()">Verify</button>
+		</div>
+
+		<div>
+			<p style="font-size: 25px;font-weight: bold;">The Email is  =><span id="validemail"></span></p>
+			<hr>
+			<p style="font-size: 25px;font-weight: bold; text-decoration: underline; color: brown;">Full Api Response</p>
+			<table id="apiTable">  
 				<tr>
-				<th></th>
-				<th>USD</th>
-				<th>GBP</th>
+					<td>
+						<span>catch_all: </span>
+						<span id="catch_all"></span>
+					</td>
 				</tr>
 				<tr>
-				<td class="TL">TL</td>
-				<td id="USD"></td>
-				<td id="GBP"></td>
+					<td>
+						<span>did_you_mean: </span>
+						<span id="did_you_mean"></span>
+					</td>
 				</tr>
-			
+				<tr>
+					<td>
+						<span>disposable: </span>
+						<span id="disposable"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>domain: </span>
+						<span id="domain"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>email: </span>
+						<span id="email"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>format_valid: </span>
+						<span id="format_valid"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>free: </span>
+						<span id="free"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>mx_found: </span>
+						<span id="mx_found"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>role: </span>
+						<span id="role"></span>
+					</td>
+				</tr>
+				<tr>    
+					<td>
+						<span>score: </span>
+						<span id="score"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>smtp_check: </span>
+						<span id="smtp_check"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>user: </span>
+						<span id="user"></span>
+					</td>
+				</tr>
+
 			</table>
 		</div>
 	</div>
 
 <script>
-	var USD;
-	var GBP;
 
-	fetchRequst();
-	//setInterval(request, 5000);
+
+	function myFunction(){
+
 		
-	function request(){
-		var requestURL = 'https://api.exchangerate.host/latest?base=TRY';
-		var request = new XMLHttpRequest();
-		
-		request.open('GET', requestURL);
-		request.responseType = 'json';
-		request.send();
+		var myHeaders = new Headers();
+		myHeaders.append("apikey", "wyPNk0WPgtECcZ4v6rOGvdjo9RjGqM6n");
 
-		request.onload = function() {
-			var response = request.response;
-			
-			USD = 1/response.rates.USD
-			GBP = 1/response.rates.GBP
+		var requestOptions = {
+		method: 'GET',
+		redirect: 'follow',
+		headers: myHeaders
+		};
 
-			document.getElementById("USD").innerHTML = USD.toFixed(4);
-			document.getElementById("GBP").innerHTML = GBP.toFixed(4);
-			console.log(response);
-		}
+		var email = document.querySelector('#mailText').value;
+
+		fetch("https://api.apilayer.com/email_verification/check?email=" + email, requestOptions)
+		.then(response => 
+			response.json())
+		.then(result => {
+			console.log(result)
+			document.querySelector('#email').innerHTML = result.email
+			document.querySelector('#did_you_mean').innerHTML = result.did_you_mean
+			document.querySelector('#user').innerHTML = result.user
+			document.querySelector('#domain').innerHTML = result.domain
+			document.querySelector('#format_valid').innerHTML = result.format_valid
+			document.querySelector('#mx_found').innerHTML = result.mx_found
+			document.querySelector('#smtp_check').innerHTML = result.smtp_check
+			document.querySelector('#catch_all').innerHTML = result.catch_all
+			document.querySelector('#role').innerHTML = result.role
+			document.querySelector('#disposable').innerHTML = result.disposable
+			document.querySelector('#free').innerHTML = result.free
+			document.querySelector('#score').innerHTML = result.score
+
+			if (result.format_valid) {               
+                document.querySelector("#validemail").innerHTML = ' Valid';
+				document.querySelector("#validemail").style.color = 'green'
+            }
+			else {
+				document.querySelector("#validemail").innerHTML = ' Invalid';
+				document.querySelector("#validemail").style.color = 'red'
+			}
+		})
+		.catch(error => console.log('error', error))
 	}
+// wyPNk0WPgtECcZ4v6rOGvdjo9RjGqM6n
 
-	function fetchRequst(){
-		var requestURL = 'https://sleepy-dawn-59995.herokuapp.com/employees/6';
-		fetch(requestURL)
-			.then((response) => {
-			return response.json();
-			})
-			.then((data) => {
-				console.log(data);
-			})
-	}
 </script>
 
+
 </body>
+
 </html>
+
